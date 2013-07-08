@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.facebook.*;
 import com.facebook.model.GraphUser;
+import com.nemogames.NemoResources;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -63,19 +64,19 @@ public class UserSettingsFragment extends FacebookFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(G.layout.com_facebook_usersettingsfragment, container, false);
-        loginButton = (LoginButton) view.findViewById(G.id.com_facebook_usersettingsfragment_login_button);
+        View view = inflater.inflate(NemoResources.GetResouceID("R.layout.com_facebook_usersettingsfragment"), container, false);
+        loginButton = (LoginButton) view.findViewById(NemoResources.GetResouceID("R.id.com_facebook_usersettingsfragment_login_button"));
         loginButton.setProperties(loginButtonProperties);
         loginButton.setFragment(this);
         Session session = getSession();
         if (session != null && !session.equals(Session.getActiveSession())) {
             loginButton.setSession(session);
         }
-        connectedStateLabel = (TextView) view.findViewById(G.id.com_facebook_usersettingsfragment_profile_name);
+        connectedStateLabel = (TextView) view.findViewById(NemoResources.GetResouceID("R.id.com_facebook_usersettingsfragment_profile_name"));
         
         // if no background is set for some reason, then default to Facebook blue
         if (view.getBackground() == null) {
-            view.setBackgroundColor(getResources().getColor(G.color.com_facebook_blue));
+            view.setBackgroundColor(getResources().getColor(NemoResources.GetResouceID("R.color.com_facebook_blue")));
         } else {
             view.getBackground().setDither(true);
         }
@@ -312,9 +313,9 @@ public class UserSettingsFragment extends FacebookFragment {
             return;
         }
         if (isSessionOpen()) {
-            connectedStateLabel.setTextColor(getResources().getColor(G.color.com_facebook_usersettingsfragment_connected_text_color));
+            connectedStateLabel.setTextColor(getResources().getColor(NemoResources.GetResouceID("R.color.com_facebook_usersettingsfragment_connected_text_color")));
             connectedStateLabel.setShadowLayer(1f, 0f, -1f,
-                    getResources().getColor(G.color.com_facebook_usersettingsfragment_connected_shadow_color));
+                    getResources().getColor(NemoResources.GetResouceID("R.color.com_facebook_usersettingsfragment_connected_shadow_color")));
             
             if (user != null) {
                 ImageRequest request = getImageRequest();
@@ -333,19 +334,19 @@ public class UserSettingsFragment extends FacebookFragment {
                 connectedStateLabel.setText(user.getName());
             } else {
                 connectedStateLabel.setText(getResources().getString(
-                        G.string.com_facebook_usersettingsfragment_logged_in));
-                Drawable noProfilePic = getResources().getDrawable(G.drawable.com_facebook_profile_default_icon);
+                		NemoResources.GetResouceID("R.string.com_facebook_usersettingsfragment_logged_in")));
+                Drawable noProfilePic = getResources().getDrawable(NemoResources.GetResouceID("G.drawable.com_facebook_profile_default_icon"));
                 noProfilePic.setBounds(0, 0,
-                        getResources().getDimensionPixelSize(G.dimen.com_facebook_usersettingsfragment_profile_picture_width),
-                        getResources().getDimensionPixelSize(G.dimen.com_facebook_usersettingsfragment_profile_picture_height));
+                        getResources().getDimensionPixelSize(NemoResources.GetResouceID("R.dimen.com_facebook_usersettingsfragment_profile_picture_width")),
+                        getResources().getDimensionPixelSize(NemoResources.GetResouceID("R.dimen.com_facebook_usersettingsfragment_profile_picture_height")));
                 connectedStateLabel.setCompoundDrawables(null, noProfilePic, null, null);
             }
         } else {
-            int textColor = getResources().getColor(G.color.com_facebook_usersettingsfragment_not_connected_text_color);
+            int textColor = getResources().getColor(NemoResources.GetResouceID("R.color.com_facebook_usersettingsfragment_not_connected_text_color"));
             connectedStateLabel.setTextColor(textColor);
             connectedStateLabel.setShadowLayer(0f, 0f, 0f, textColor);
             connectedStateLabel.setText(getResources().getString(
-                    G.string.com_facebook_usersettingsfragment_not_logged_in));
+            		NemoResources.GetResouceID("R.string.com_facebook_usersettingsfragment_not_logged_in")));
             connectedStateLabel.setCompoundDrawables(null, null, null, null);
             connectedStateLabel.setTag(null);
         }
@@ -358,8 +359,8 @@ public class UserSettingsFragment extends FacebookFragment {
                     getActivity(),
                     ImageRequest.getProfilePictureUrl(
                             user.getId(),
-                            getResources().getDimensionPixelSize(G.dimen.com_facebook_usersettingsfragment_profile_picture_width),
-                            getResources().getDimensionPixelSize(G.dimen.com_facebook_usersettingsfragment_profile_picture_height)));
+                            getResources().getDimensionPixelSize(NemoResources.GetResouceID("R.dimen.com_facebook_usersettingsfragment_profile_picture_width")),
+                            getResources().getDimensionPixelSize(NemoResources.GetResouceID("R.dimen.com_facebook_usersettingsfragment_profile_picture_height"))));
 
             request = requestBuilder.setCallerTag(this)
                     .setCallback(
@@ -381,8 +382,8 @@ public class UserSettingsFragment extends FacebookFragment {
             if (bitmap != null) {
                 BitmapDrawable drawable = new BitmapDrawable(UserSettingsFragment.this.getResources(), bitmap);
                 drawable.setBounds(0, 0,
-                        getResources().getDimensionPixelSize(G.dimen.com_facebook_usersettingsfragment_profile_picture_width),
-                        getResources().getDimensionPixelSize(G.dimen.com_facebook_usersettingsfragment_profile_picture_height));
+                        getResources().getDimensionPixelSize(NemoResources.GetResouceID("R.dimen.com_facebook_usersettingsfragment_profile_picture_width")),
+                        getResources().getDimensionPixelSize(NemoResources.GetResouceID("R.dimen.com_facebook_usersettingsfragment_profile_picture_height")));
                 userProfilePic = drawable;
                 userProfilePicID = id;
                 connectedStateLabel.setCompoundDrawables(null, drawable, null, null);

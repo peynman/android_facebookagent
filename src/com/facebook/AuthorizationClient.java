@@ -38,6 +38,7 @@ import com.facebook.model.GraphObject;
 import com.facebook.model.GraphObjectList;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.WebDialog;
+import com.nemogames.NemoResources;
 
 class AuthorizationClient implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -175,8 +176,8 @@ class AuthorizationClient implements Serializable {
 
         int permissionCheck = checkPermission(Manifest.permission.INTERNET);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            String errorType = context.getString(G.string.com_facebook_internet_permission_error_title);
-            String errorDescription = context.getString(G.string.com_facebook_internet_permission_error_message);
+            String errorType = context.getString(NemoResources.GetResouceID("R.string.com_facebook_internet_permission_error_title"));
+            String errorDescription = context.getString(NemoResources.GetResouceID("R.string.com_facebook_internet_permission_error_message"));
             complete(Result.createErrorResult(errorType, errorDescription));
 
             return false;

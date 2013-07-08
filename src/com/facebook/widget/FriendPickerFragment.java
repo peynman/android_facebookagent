@@ -23,8 +23,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import com.facebook.*;
-import com.facebook.G;
 import com.facebook.model.GraphUser;
+import com.nemogames.NemoResources;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -68,7 +68,7 @@ public class FriendPickerFragment extends PickerFragment<GraphUser> {
      */
     @SuppressLint("ValidFragment")
     public FriendPickerFragment(Bundle args) {
-        super(GraphUser.class, G.layout.com_facebook_friendpickerfragment, args);
+        super(GraphUser.class, NemoResources.GetResouceID("R.layout.com_facebook_friendpickerfragment"), args);
         setFriendPickerSettingsFromBundle(args);
     }
 
@@ -120,9 +120,9 @@ public class FriendPickerFragment extends PickerFragment<GraphUser> {
     @Override
     public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
         super.onInflate(activity, attrs, savedInstanceState);
-        TypedArray a = activity.obtainStyledAttributes(attrs, G.styleable.com_facebook_friend_picker_fragment);
+        TypedArray a = activity.obtainStyledAttributes(attrs, new int[] {NemoResources.GetResouceID("R.styleable.com_facebook_friend_picker_fragment")});
 
-        setMultiSelect(a.getBoolean(G.styleable.com_facebook_friend_picker_fragment_multi_select, multiSelect));
+        setMultiSelect(a.getBoolean(NemoResources.GetResouceID("R.styleable.com_facebook_friend_picker_fragment_multi_select"), multiSelect));
 
         a.recycle();
     }
@@ -146,12 +146,12 @@ public class FriendPickerFragment extends PickerFragment<GraphUser> {
 
             @Override
             protected int getGraphObjectRowLayoutId(GraphUser graphObject) {
-                return G.layout.com_facebook_picker_list_row;
+                return NemoResources.GetResouceID("R.layout.com_facebook_picker_list_row");
             }
 
             @Override
             protected int getDefaultPicture() {
-                return G.drawable.com_facebook_profile_default_icon;
+                return NemoResources.GetResouceID("R.drawable.com_facebook_profile_default_icon");
             }
 
         };
@@ -185,7 +185,7 @@ public class FriendPickerFragment extends PickerFragment<GraphUser> {
 
     @Override
     String getDefaultTitleText() {
-        return getString(G.string.com_facebook_choose_friends);
+        return getString(NemoResources.GetResouceID("R.string.com_facebook_choose_friends"));
     }
 
     private Request createRequest(String userID, Set<String> extraFields, Session session) {

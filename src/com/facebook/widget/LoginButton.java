@@ -16,6 +16,9 @@
 
 package com.facebook.widget;
 
+import java.util.Collections;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -29,14 +32,19 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import com.facebook.*;
-import com.facebook.model.GraphUser;
+
+import com.facebook.FacebookException;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionDefaultAudience;
+import com.facebook.SessionLoginBehavior;
+import com.facebook.SessionState;
 import com.facebook.internal.SessionAuthorizationType;
 import com.facebook.internal.SessionTracker;
 import com.facebook.internal.Utility;
-
-import java.util.Collections;
-import java.util.List;
+import com.facebook.model.GraphUser;
+import com.nemogames.NemoResources;
 
 /**
  * A Log In/Log Out button that maintains session state and logs
@@ -200,24 +208,24 @@ public class LoginButton extends Button {
             // apparently there's no method of setting a default style in xml,
             // so in case the users do not explicitly specify a style, we need
             // to use sensible defaults.
-            this.setTextColor(getResources().getColor(G.color.com_facebook_loginview_text_color));
+            this.setTextColor(getResources().getColor(NemoResources.GetResouceID("R.color.com_facebook_loginview_text_color")));
             this.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                    getResources().getDimension(G.dimen.com_facebook_loginview_text_size));
-            this.setPadding(getResources().getDimensionPixelSize(G.dimen.com_facebook_loginview_padding_left),
-                    getResources().getDimensionPixelSize(G.dimen.com_facebook_loginview_padding_top),
-                    getResources().getDimensionPixelSize(G.dimen.com_facebook_loginview_padding_right),
-                    getResources().getDimensionPixelSize(G.dimen.com_facebook_loginview_padding_bottom));
-            this.setWidth(getResources().getDimensionPixelSize(G.dimen.com_facebook_loginview_width));
-            this.setHeight(getResources().getDimensionPixelSize(G.dimen.com_facebook_loginview_height));
+                    getResources().getDimension(NemoResources.GetResouceID("R.dimen.com_facebook_loginview_text_size")));
+            this.setPadding(getResources().getDimensionPixelSize(NemoResources.GetResouceID("R.dimen.com_facebook_loginview_padding_left")),
+                    getResources().getDimensionPixelSize(NemoResources.GetResouceID("R.dimen.com_facebook_loginview_padding_top")),
+                    getResources().getDimensionPixelSize(NemoResources.GetResouceID("R.dimen.com_facebook_loginview_padding_right")),
+                    getResources().getDimensionPixelSize(NemoResources.GetResouceID("R.dimen.com_facebook_loginview_padding_bottom")));
+            this.setWidth(getResources().getDimensionPixelSize(NemoResources.GetResouceID("R.dimen.com_facebook_loginview_width")));
+            this.setHeight(getResources().getDimensionPixelSize(NemoResources.GetResouceID("R.dimen.com_facebook_loginview_height")));
             this.setGravity(Gravity.CENTER);
             if (isInEditMode()) {
                 // cannot use a drawable in edit mode, so setting the background color instead
                 // of a background resource.
-                this.setBackgroundColor(getResources().getColor(G.color.com_facebook_blue));
+                this.setBackgroundColor(getResources().getColor(NemoResources.GetResouceID("R.color.com_facebook_blue")));
                 // hardcoding in edit mode as getResources().getString() doesn't seem to work in IntelliJ
                 loginText = "Log in";
             } else {
-                this.setBackgroundResource(G.drawable.com_facebook_loginbutton_blue);
+                this.setBackgroundResource(NemoResources.GetResouceID("R.drawable.com_facebook_loginbutton_blue"));
             }
         }
         parseAttributes(attrs);
@@ -515,21 +523,21 @@ public class LoginButton extends Button {
     }
 
     private void parseAttributes(AttributeSet attrs) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, G.styleable.com_facebook_login_view);
-        confirmLogout = a.getBoolean(G.styleable.com_facebook_login_view_confirm_logout, true);
-        fetchUserInfo = a.getBoolean(G.styleable.com_facebook_login_view_fetch_user_info, true);
-        loginText = a.getString(G.styleable.com_facebook_login_view_login_text);
-        logoutText = a.getString(G.styleable.com_facebook_login_view_logout_text);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, new int[] {NemoResources.GetResouceID("R.styleable.com_facebook_login_view")});
+        confirmLogout = a.getBoolean(NemoResources.GetResouceID("R.styleable.com_facebook_login_view_confirm_logout"), true);
+        fetchUserInfo = a.getBoolean(NemoResources.GetResouceID("R.styleable.com_facebook_login_view_fetch_user_info"), true);
+        loginText = a.getString(NemoResources.GetResouceID("R.styleable.com_facebook_login_view_login_text"));
+        logoutText = a.getString(NemoResources.GetResouceID("R.styleable.com_facebook_login_view_logout_text"));
         a.recycle();
     }
 
     private void setButtonText() {
         if (sessionTracker != null && sessionTracker.getOpenSession() != null) {
             setText((logoutText != null) ? logoutText :
-                    getResources().getString(G.string.com_facebook_loginview_log_out_button));
+                    getResources().getString(NemoResources.GetResouceID("R.string.com_facebook_loginview_log_out_button")));
         } else {
             setText((loginText != null) ? loginText :
-                    getResources().getString(G.string.com_facebook_loginview_log_in_button));
+                    getResources().getString(NemoResources.GetResouceID("R.string.com_facebook_loginview_log_in_button")));
         }
     }
 
@@ -592,13 +600,13 @@ public class LoginButton extends Button {
                 // If the Session is currently open, it must mean we need to log out
                 if (confirmLogout) {
                     // Create a confirmation dialog
-                    String logout = getResources().getString(G.string.com_facebook_loginview_log_out_action);
-                    String cancel = getResources().getString(G.string.com_facebook_loginview_cancel_action);
+                    String logout = getResources().getString(NemoResources.GetResouceID("R.string.com_facebook_loginview_log_out_action"));
+                    String cancel = getResources().getString(NemoResources.GetResouceID("R.string.com_facebook_loginview_cancel_action"));
                     String message;
                     if (user != null && user.getName() != null) {
-                        message = String.format(getResources().getString(G.string.com_facebook_loginview_logged_in_as), user.getName());
+                        message = String.format(getResources().getString(NemoResources.GetResouceID("R.string.com_facebook_loginview_logged_in_as")), user.getName());
                     } else {
-                        message = getResources().getString(G.string.com_facebook_loginview_logged_in_using_facebook);
+                        message = getResources().getString(NemoResources.GetResouceID("R.string.com_facebook_loginview_logged_in_using_facebook"));
                     }
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setMessage(message)

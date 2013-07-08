@@ -35,6 +35,7 @@ import android.widget.*;
 import com.facebook.*;
 import com.facebook.model.GraphObject;
 import com.facebook.internal.SessionTracker;
+import com.nemogames.NemoResources;
 
 import java.util.*;
 
@@ -125,20 +126,20 @@ public abstract class PickerFragment<T extends GraphObject> extends Fragment {
     @Override
     public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
         super.onInflate(activity, attrs, savedInstanceState);
-        TypedArray a = activity.obtainStyledAttributes(attrs, G.styleable.com_facebook_picker_fragment);
+        TypedArray a = activity.obtainStyledAttributes(attrs,new int[] {NemoResources.GetResouceID("R.styleable.com_facebook_picker_fragment")});
 
-        setShowPictures(a.getBoolean(G.styleable.com_facebook_picker_fragment_show_pictures, showPictures));
-        String extraFieldsString = a.getString(G.styleable.com_facebook_picker_fragment_extra_fields);
+        setShowPictures(a.getBoolean(NemoResources.GetResouceID("R.styleable.com_facebook_picker_fragment_show_pictures"), showPictures));
+        String extraFieldsString = a.getString(NemoResources.GetResouceID("R.styleable.com_facebook_picker_fragment_extra_fields"));
         if (extraFieldsString != null) {
             String[] strings = extraFieldsString.split(",");
             setExtraFields(Arrays.asList(strings));
         }
 
-        showTitleBar = a.getBoolean(G.styleable.com_facebook_picker_fragment_show_title_bar, showTitleBar);
-        titleText = a.getString(G.styleable.com_facebook_picker_fragment_title_text);
-        doneButtonText = a.getString(G.styleable.com_facebook_picker_fragment_done_button_text);
-        titleBarBackground = a.getDrawable(G.styleable.com_facebook_picker_fragment_title_bar_background);
-        doneButtonBackground = a.getDrawable(G.styleable.com_facebook_picker_fragment_done_button_background);
+        showTitleBar = a.getBoolean(NemoResources.GetResouceID("R.styleable.com_facebook_picker_fragment_show_title_bar"), showTitleBar);
+        titleText = a.getString(NemoResources.GetResouceID("R.styleable.com_facebook_picker_fragment_title_text"));
+        doneButtonText = a.getString(NemoResources.GetResouceID("R.styleable.com_facebook_picker_fragment_done_button_text"));
+        titleBarBackground = a.getDrawable(NemoResources.GetResouceID("R.styleable.com_facebook_picker_fragment_title_bar_background"));
+        doneButtonBackground = a.getDrawable(NemoResources.GetResouceID("R.styleable.com_facebook_picker_fragment_done_button_background"));
 
         a.recycle();
     }
@@ -147,7 +148,7 @@ public abstract class PickerFragment<T extends GraphObject> extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(layout, container, false);
 
-        listView = (ListView) view.findViewById(G.id.com_facebook_picker_list_view);
+        listView = (ListView) view.findViewById(NemoResources.GetResouceID("R.id.com_facebook_picker_list_view"));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -165,9 +166,7 @@ public abstract class PickerFragment<T extends GraphObject> extends Fragment {
         });
         listView.setOnScrollListener(onScrollListener);
         listView.setAdapter(adapter);
-
-        activityCircle = (ProgressBar) view.findViewById(G.id.com_facebook_picker_activity_circle);
-
+        activityCircle = (ProgressBar) view.findViewById(NemoResources.GetResouceID("R.id.com_facebook_picker_activity_circle"));
         return view;
     }
 
@@ -525,7 +524,7 @@ public abstract class PickerFragment<T extends GraphObject> extends Fragment {
     }
 
     String getDefaultDoneButtonText() {
-        return getString(G.string.com_facebook_picker_done_button_text);
+        return getString(NemoResources.GetResouceID("R.string.com_facebook_picker_done_button_text"));
     }
 
     void displayActivityCircle() {
@@ -597,21 +596,21 @@ public abstract class PickerFragment<T extends GraphObject> extends Fragment {
     }
 
     private void inflateTitleBar(ViewGroup view) {
-        ViewStub stub = (ViewStub) view.findViewById(G.id.com_facebook_picker_title_bar_stub);
+        ViewStub stub = (ViewStub) view.findViewById(NemoResources.GetResouceID("R.id.com_facebook_picker_title_bar_stub"));
         if (stub != null) {
             View titleBar = stub.inflate();
 
             final RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.FILL_PARENT,
                     RelativeLayout.LayoutParams.FILL_PARENT);
-            layoutParams.addRule(RelativeLayout.BELOW, G.id.com_facebook_picker_title_bar);
+            layoutParams.addRule(RelativeLayout.BELOW, NemoResources.GetResouceID("R.id.com_facebook_picker_title_bar"));
             listView.setLayoutParams(layoutParams);
 
             if (titleBarBackground != null) {
                 titleBar.setBackgroundDrawable(titleBarBackground);
             }
 
-            doneButton = (Button) view.findViewById(G.id.com_facebook_picker_done_button);
+            doneButton = (Button) view.findViewById(NemoResources.GetResouceID("R.id.com_facebook_picker_done_button"));
             if (doneButton != null) {
                 doneButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -631,7 +630,7 @@ public abstract class PickerFragment<T extends GraphObject> extends Fragment {
                 }
             }
 
-            titleTextView = (TextView) view.findViewById(G.id.com_facebook_picker_title);
+            titleTextView = (TextView) view.findViewById(NemoResources.GetResouceID("R.id.com_facebook_picker_title"));
             if (titleTextView != null) {
                 if (getTitleText() != null) {
                     titleTextView.setText(getTitleText());

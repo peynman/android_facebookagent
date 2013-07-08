@@ -16,8 +16,10 @@
 
 package com.facebook;
 
-import com.facebook.G;
+
 import com.facebook.internal.Utility;
+import com.nemogames.NemoResources;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -141,21 +143,21 @@ public final class FacebookRequestError {
                 errorCategory = Category.THROTTLING;
             } else if (errorCode == EC_PERMISSION_DENIED || EC_RANGE_PERMISSION.contains(errorCode)) {
                 errorCategory = Category.PERMISSION;
-                messageId = G.string.com_facebook_requesterror_permissions;
+                messageId = NemoResources.GetResouceID("R.string.com_facebook_requesterror_permissions");
             } else if (errorCode == EC_INVALID_SESSION || errorCode == EC_INVALID_TOKEN) {
                 if (subErrorCode == EC_USER_CHECKPOINTED || subErrorCode == EC_UNCONFIRMED_USER) {
                     errorCategory = Category.AUTHENTICATION_RETRY;
-                    messageId = G.string.com_facebook_requesterror_web_login;
+                    messageId = NemoResources.GetResouceID("R.string.com_facebook_requesterror_web_login");
                     shouldNotify = true;
                 } else {
                     errorCategory = Category.AUTHENTICATION_REOPEN_SESSION;
 
                     if ((subErrorCode == EC_APP_NOT_INSTALLED) || (subErrorCode == EC_EXPIRED)) {
-                        messageId = G.string.com_facebook_requesterror_relogin;
+                        messageId = NemoResources.GetResouceID("R.string.com_facebook_requesterror_relogin");
                     } else if (subErrorCode == EC_PASSWORD_CHANGED) {
-                        messageId = G.string.com_facebook_requesterror_password_changed;
+                        messageId = NemoResources.GetResouceID("R.string.com_facebook_requesterror_password_changed");
                     } else {
-                        messageId = G.string.com_facebook_requesterror_reconnect;
+                        messageId = NemoResources.GetResouceID("R.string.com_facebook_requesterror_reconnect");
                         shouldNotify = true;
                     }
                 }

@@ -29,9 +29,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import com.facebook.FacebookException;
 import com.facebook.LoggingBehavior;
-import com.facebook.G;
 import com.facebook.internal.Logger;
 import com.facebook.internal.Utility;
+import com.nemogames.NemoResources;
 
 import java.net.MalformedURLException;
 
@@ -372,9 +372,9 @@ public class ProfilePictureView extends FrameLayout {
     }
 
     private void parseAttributes(AttributeSet attrs) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, G.styleable.com_facebook_profile_picture_view);
-        setPresetSize(a.getInt(G.styleable.com_facebook_profile_picture_view_preset_size, CUSTOM));
-        isCropped = a.getBoolean(G.styleable.com_facebook_profile_picture_view_is_cropped, IS_CROPPED_DEFAULT_VALUE);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, new int[] {NemoResources.GetResouceID("R.styleable.com_facebook_profile_picture_view")});
+        setPresetSize(a.getInt(NemoResources.GetResouceID("R.styleable.com_facebook_profile_picture_view_preset_size"), CUSTOM));
+        isCropped = a.getBoolean(NemoResources.GetResouceID("R.styleable.com_facebook_profile_picture_view_is_cropped"), IS_CROPPED_DEFAULT_VALUE);
         a.recycle();
     }
 
@@ -393,8 +393,8 @@ public class ProfilePictureView extends FrameLayout {
 
     private void setBlankProfilePicture() {
         int blankImageResource = isCropped() ?
-                G.drawable.com_facebook_profile_picture_blank_square :
-                G.drawable.com_facebook_profile_picture_blank_portrait;
+        		NemoResources.GetResouceID("R.drawable.com_facebook_profile_picture_blank_square") :
+        				NemoResources.GetResouceID("R.drawable.com_facebook_profile_picture_blank_portrait");
         setImageBitmap( BitmapFactory.decodeResource(getResources(), blankImageResource));
     }
 
@@ -496,19 +496,19 @@ public class ProfilePictureView extends FrameLayout {
         int dimensionId;
         switch (presetSizeType) {
             case SMALL:
-                dimensionId = G.dimen.com_facebook_profilepictureview_preset_size_small;
+                dimensionId = NemoResources.GetResouceID("R.dimen.com_facebook_profilepictureview_preset_size_small");
                 break;
             case NORMAL:
-                dimensionId = G.dimen.com_facebook_profilepictureview_preset_size_normal;
+                dimensionId = NemoResources.GetResouceID("R.dimen.com_facebook_profilepictureview_preset_size_normal");
                 break;
             case LARGE:
-                dimensionId = G.dimen.com_facebook_profilepictureview_preset_size_large;
+                dimensionId = NemoResources.GetResouceID("R.dimen.com_facebook_profilepictureview_preset_size_large");
                 break;
             case CUSTOM:
                 if (!forcePreset) {
                     return ImageRequest.UNSPECIFIED_DIMENSION;
                 } else {
-                    dimensionId = G.dimen.com_facebook_profilepictureview_preset_size_normal;
+                    dimensionId = NemoResources.GetResouceID("R.dimen.com_facebook_profilepictureview_preset_size_normal");
                     break;
                 }
             default:

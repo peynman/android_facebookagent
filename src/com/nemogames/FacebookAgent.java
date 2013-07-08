@@ -449,7 +449,10 @@ public class FacebookAgent implements Session.StatusCallback, NemoActivityListen
 			if (session == null || !session.isOpened())
 			{
 				obj.put("eid", FacebookEvent.OnSessionOpenFailed.getValue());
-				if (exception != null) obj.put("error", exception.getMessage());
+				if (exception != null)
+					obj.put("error", exception.getMessage());
+				else
+					obj.put("error", state.toString());
 			} else
 			{
 				 if (session.isOpened())
